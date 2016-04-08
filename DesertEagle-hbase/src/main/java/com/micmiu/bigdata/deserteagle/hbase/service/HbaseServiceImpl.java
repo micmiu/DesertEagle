@@ -1,6 +1,5 @@
 package com.micmiu.bigdata.deserteagle.hbase.service;
 
-import com.micmiu.bigdata.deserteagle.es.client.EsClientManager;
 import com.micmiu.bigdata.deserteagle.hbase.client.HbaseConnectionManager;
 import com.micmiu.bigdata.deserteagle.hbase.model.HbaseEntity;
 import com.micmiu.bigdata.deserteagle.hbase.util.HBaseUtils;
@@ -32,8 +31,6 @@ public class HbaseServiceImpl implements HbaseService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HbaseServiceImpl.class);
 
 	private HbaseConnectionManager hbaseConnectionManager;
-
-	private EsClientManager esClientManager;
 
 	public Boolean checkTable(String tableName) {
 		if (null == tableName || "".equals(tableName)) {
@@ -165,7 +162,7 @@ public class HbaseServiceImpl implements HbaseService {
 			htable = getTable(tableName);
 			List<Delete> list = new ArrayList<Delete>();
 			for (Map<String, String> dataMap : keyList) {
-				String rowKey = dataMap.get("ROWKEY");
+				String rowKey = dataMap.get(ROWKEY);
 				if (null == rowKey || "".equals(rowKey)) {
 					continue;
 				}
@@ -215,6 +212,10 @@ public class HbaseServiceImpl implements HbaseService {
 			HBaseUtils.closeHtable(htable);
 		}
 
+	}
+
+	public void setHbaseConnectionManager(HbaseConnectionManager hbaseConnectionManager) {
+		this.hbaseConnectionManager = hbaseConnectionManager;
 	}
 }
 

@@ -22,7 +22,6 @@ public interface HbaseService {
 
 	List<Map<String, String>> queryDataByRowkeyList(String tableName, String familyName, List<String> rowkeyList);
 
-
 	boolean putDataEntity(HbaseEntity entity);
 
 	boolean putData(String tableName, String rowKey, String familyName, Map<String, String> dataMap);
@@ -30,7 +29,6 @@ public interface HbaseService {
 	boolean putData(String tableName, String familyName, Map<String, String> dataMap);
 
 	boolean putData(String tableName, String familyName, List<Map<String, String>> dataList);
-
 
 	boolean deleteData(String tableName, String rowKey);
 
