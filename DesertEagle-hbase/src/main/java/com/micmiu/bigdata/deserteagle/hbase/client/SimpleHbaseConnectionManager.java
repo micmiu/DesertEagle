@@ -82,7 +82,7 @@ public class SimpleHbaseConnectionManager implements HbaseConnectionManager {
 		} catch (Exception ex) {
 			LOGGER.error("create conn err:", ex);
 		}
-		LOGGER.info("hbase setup success.");
+		LOGGER.info("hbase connection setup finished.");
 	}
 
 	public Configuration getConfig() {

@@ -16,6 +16,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.micmiu.bigdata</groupId>
+            <artifactId>deserteagle-es</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>
             <exclusions>
