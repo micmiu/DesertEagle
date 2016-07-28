@@ -12,7 +12,7 @@ public class HbaseServiceTest {
 
 	public static void main(String[] args) {
 
-		String quorum = "192.168.0.30,192.168.0.31,192.168.0.32";
+		String quorum = "10.188.1.53,10.188.1.54,10.188.1.55";
 		int port = 2181;
 		String znode = "/hyperbase1";
 		SimpleHbaseConnectionManager hbaseConnectionManager = new SimpleHbaseConnectionManager(quorum, port, znode);
