@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.micmiu.bigdata</groupId>
     <artifactId>deserteagle</artifactId>
-    <version>1.0-beta</version>
+    <version>1.1-SNAPSHOT</version>
     <description>bigdata tools</description>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
