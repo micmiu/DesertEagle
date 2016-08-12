@@ -1,7 +1,7 @@
 package com.micmiu.bigdata.deserteagle.hbase.service;
 
 import com.micmiu.bigdata.deserteagle.hbase.client.HbaseConnectionManager;
-import com.micmiu.bigdata.deserteagle.hbase.model.HbaseEntity;
+import com.micmiu.bigdata.deserteagle.hbase.entity.HbaseEntity;
 import com.micmiu.bigdata.deserteagle.hbase.util.HBaseUtils;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;

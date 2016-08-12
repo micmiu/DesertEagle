@@ -1,8 +1,8 @@
 package com.micmiu.bigdata.deserteagle.es.service;
 
 
-import com.micmiu.bigdata.deserteagle.core.model.FullTextIndexQueryResult;
-import com.micmiu.bigdata.deserteagle.core.model.QueryFilter;
+import com.micmiu.bigdata.deserteagle.core.query.FullTextIndexQueryResult;
+import com.micmiu.bigdata.deserteagle.core.query.QueryFilter;
 import com.micmiu.bigdata.deserteagle.core.service.FullTextIndexService;
 import com.micmiu.bigdata.deserteagle.es.client.EsClientManager;
 import org.elasticsearch.action.search.SearchRequestBuilder;

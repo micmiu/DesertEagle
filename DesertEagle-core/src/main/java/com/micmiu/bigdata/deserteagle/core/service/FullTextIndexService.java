@@ -1,7 +1,7 @@
 package com.micmiu.bigdata.deserteagle.core.service;
 
-import com.micmiu.bigdata.deserteagle.core.model.FullTextIndexQueryResult;
-import com.micmiu.bigdata.deserteagle.core.model.QueryFilter;
+import com.micmiu.bigdata.deserteagle.core.query.FullTextIndexQueryResult;
+import com.micmiu.bigdata.deserteagle.core.query.QueryFilter;
 
 import java.util.List;
 

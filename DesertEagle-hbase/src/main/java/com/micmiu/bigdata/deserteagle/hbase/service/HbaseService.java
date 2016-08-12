@@ -1,6 +1,6 @@
 package com.micmiu.bigdata.deserteagle.hbase.service;
 
-import com.micmiu.bigdata.deserteagle.hbase.model.HbaseEntity;
+import com.micmiu.bigdata.deserteagle.hbase.entity.HbaseEntity;
 import org.apache.hadoop.hbase.client.HTableInterface;
 
 import java.util.List;

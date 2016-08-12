@@ -1,4 +1,4 @@
-package com.micmiu.bigdata.deserteagle.core.model;
+package com.micmiu.bigdata.deserteagle.core.query;
 
 /**
  * Created

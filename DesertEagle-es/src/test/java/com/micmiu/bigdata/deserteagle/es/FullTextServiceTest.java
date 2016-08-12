@@ -1,6 +1,6 @@
 package com.micmiu.bigdata.deserteagle.es;
 
-import com.micmiu.bigdata.deserteagle.core.model.QueryFilter;
+import com.micmiu.bigdata.deserteagle.core.query.QueryFilter;
 import com.micmiu.bigdata.deserteagle.es.client.EsTransportClientManager;
 import com.micmiu.bigdata.deserteagle.es.service.EsFullTextIndexService;
 

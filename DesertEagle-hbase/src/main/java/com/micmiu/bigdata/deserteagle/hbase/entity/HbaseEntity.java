@@ -1,4 +1,4 @@
-package com.micmiu.bigdata.deserteagle.hbase.model;
+package com.micmiu.bigdata.deserteagle.hbase.entity;
 
 import java.util.HashMap;
 import java.util.Map;
