@@ -18,4 +18,13 @@ public interface FullTextIndexService {
 	Long queryCount(String tableName, QueryFilter... filters);
 
 	Long queryCount(String tableName, List<QueryFilter> filterList);
+
+	FullTextIndexQueryResult search(String tableName, List<QueryFilter> filterList);
+
+	FullTextIndexQueryResult search(String tableName, QueryFilter... filters);
+
+	FullTextIndexQueryResult search(String tableName, int limit, List<QueryFilter> filterList);
+
+	FullTextIndexQueryResult search(String tableName, int limit, QueryFilter... filters);
+
 }

@@ -89,6 +89,33 @@ public class EsFullTextIndexService implements FullTextIndexService {
 		return result;
 	}
 
+	@Override
+	public FullTextIndexQueryResult search(String tableName, List<QueryFilter> filterList) {
+		long count = queryCount(tableName, filterList);
+		return search(tableName, 0, (int) count, filterList);
+	}
+
+	@Override
+	public FullTextIndexQueryResult search(String tableName, QueryFilter... filters) {
+		return search(tableName, Arrays.asList(filters));
+	}
+
+	@Override
+	public FullTextIndexQueryResult search(String tableName, int limit, List<QueryFilter> filterList) {
+		if (limit < 1) {
+			Long count = queryCount(tableName, filterList);
+			if (null != count) {
+				limit = count.intValue();
+			}
+		}
+		return search(tableName, 0, limit, filterList);
+	}
+
+	@Override
+	public FullTextIndexQueryResult search(String tableName, int limit, QueryFilter... filters) {
+		return search(tableName, limit, Arrays.asList(filters));
+	}
+
 	private QueryBuilder parseQuery(List<QueryFilter> filterList) {
 		if (null != filterList && !filterList.isEmpty()) {
 			BoolQueryBuilder qb = QueryBuilders.boolQuery();
