@@ -14,13 +14,17 @@ import java.util.Map;
  */
 public interface HbaseService {
 
-	String ROWKEY = "@ROW_KEY@";
+	int MAX_SIZE = 100;
 
 	Boolean checkTable(String tableName);
 
 	HTableInterface getTable(String tableName);
 
+	Map<String, String> getDataByKey(String tableName, String rowkey, String familyName);
+
 	List<Map<String, String>> queryDataByRowkeyList(String tableName, String familyName, List<String> rowkeyList);
+
+	List<Map<String, String>> queryDataListLimit(String tableName, String familyName, int limit);
 
 	boolean putDataEntity(HbaseEntity entity);
 
@@ -33,8 +37,6 @@ public interface HbaseService {
 	boolean deleteData(String tableName, String rowKey);
 
 	boolean deleteData(String tableName, List<String> keyList);
-
-	boolean deleteDataMap(String tableName, List<Map<String, String>> keyList);
 
 
 }

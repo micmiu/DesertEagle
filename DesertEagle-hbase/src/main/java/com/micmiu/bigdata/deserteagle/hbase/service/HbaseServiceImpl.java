@@ -11,11 +11,14 @@ import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +43,7 @@ public class HbaseServiceImpl implements HbaseService {
 			HBaseAdmin admin = new HBaseAdmin(hbaseConnectionManager.getConn());
 			return admin.tableExists(tableName);
 		} catch (Exception e) {
-			LOGGER.error("error:", e);
+			LOGGER.error("check tableName=" + tableName + " error:", e);
 			return false;
 		}
 	}
@@ -53,7 +56,7 @@ public class HbaseServiceImpl implements HbaseService {
 		try {
 			return hbaseConnectionManager.getConn().getTable(HBaseUtils.getBytes(tableName));
 		} catch (Exception e) {
-			LOGGER.error("getTable={} error :{}", tableName, e.getLocalizedMessage());
+			LOGGER.error("get tableName=" + tableName + " error:", e);
 			return null;
 		}
 	}
@@ -66,7 +69,7 @@ public class HbaseServiceImpl implements HbaseService {
 			Result[] results = htable.get(getList);
 			for (Result result : results) {
 				Map<String, String> kvMap = new LinkedHashMap<String, String>();
-				kvMap.put(ROWKEY, new String(result.getRow()));
+				kvMap.put(HbaseEntity.ROWKEY, new String(result.getRow()));
 				for (Cell cell : result.rawCells()) {
 					kvMap.put(new String(CellUtil.cloneFamily(cell)) + ":" + new String(CellUtil.cloneQualifier(cell)), new String(CellUtil.cloneValue(cell)));
 				}
@@ -79,6 +82,43 @@ public class HbaseServiceImpl implements HbaseService {
 		}
 
 		return dataResult;
+	}
+
+	@Override
+	public List<Map<String, String>> queryDataListLimit(String tableName, String familyName, int limit) {
+		List<Map<String, String>> dataResult = new ArrayList<Map<String, String>>();
+		try {
+			HTableInterface table = getTable(tableName);
+			Scan scan = new Scan();
+			scan.addFamily(HBaseUtils.getBytes(familyName));
+			scan.setMaxResultSize(limit);
+			ResultScanner rs = table.getScanner(scan);
+			for (Result result : rs) {
+				Map<String, String> kvmap = HBaseUtils.parseResult2Map(result, HbaseEntity.ROWKEY);
+				if (null != kvmap && !kvmap.isEmpty()) {
+					dataResult.add(kvmap);
+				}
+			}
+			return dataResult;
+		} catch (Exception e) {
+			LOGGER.error("getData error:", e);
+			return null;
+		}
+	}
+
+	@Override
+	public Map<String, String> getDataByKey(String tableName, String rowkey, String familyName) {
+		try {
+			HTableInterface table = getTable(tableName);
+			Get get = new Get(rowkey.getBytes());
+			get.addFamily(HBaseUtils.getBytes(familyName));
+			Result result = table.get(get);
+			return HBaseUtils.parseResult2Map(result, HbaseEntity.ROWKEY);
+		} catch (Exception e) {
+			LOGGER.error("getData error:", e);
+			return null;
+		}
+
 	}
 
 	@Override
@@ -115,7 +155,7 @@ public class HbaseServiceImpl implements HbaseService {
 
 	@Override
 	public boolean putData(String tableName, String familyName, Map<String, String> dataMap) {
-		return putData(tableName, dataMap.get(ROWKEY), familyName, dataMap);
+		return putData(tableName, dataMap.get(HbaseEntity.ROWKEY), familyName, dataMap);
 	}
 
 
@@ -126,14 +166,14 @@ public class HbaseServiceImpl implements HbaseService {
 			htable = getTable(tableName);
 			List<Put> puts = new ArrayList<Put>();
 			for (Map<String, String> dataMap : dataList) {
-				String rowKey = dataMap.get(ROWKEY);
+				String rowKey = dataMap.get(HbaseEntity.ROWKEY);
 				if (null == rowKey) {
 					LOGGER.warn("tableName={} put data={} with rowkey is null.", tableName, HBaseUtils.map2String(dataMap));
 					continue;
 				}
 				Put put = new Put(Bytes.toBytes(rowKey));
 				for (Map.Entry<String, String> entry : dataMap.entrySet()) {
-					if (ROWKEY.equals(entry.getKey())) {
+					if (HbaseEntity.ROWKEY.equals(entry.getKey())) {
 						continue;
 					}
 					if (null == entry.getValue()) {
@@ -156,40 +196,8 @@ public class HbaseServiceImpl implements HbaseService {
 	}
 
 	@Override
-	public boolean deleteDataMap(String tableName, List<Map<String, String>> keyList) {
-		HTableInterface htable = null;
-		try {
-			htable = getTable(tableName);
-			List<Delete> list = new ArrayList<Delete>();
-			for (Map<String, String> dataMap : keyList) {
-				String rowKey = dataMap.get(ROWKEY);
-				if (null == rowKey || "".equals(rowKey)) {
-					continue;
-				}
-				list.add(new Delete(Bytes.toBytes(rowKey)));
-			}
-			htable.delete(list);
-			return true;
-		} catch (Exception e) {
-			return false;
-		} finally {
-			HBaseUtils.closeHtable(htable);
-		}
-
-	}
-
-	@Override
 	public boolean deleteData(String tableName, String rowKey) {
-		HTableInterface htable = null;
-		try {
-			htable = getTable(tableName);
-			htable.delete(new Delete(Bytes.toBytes(rowKey)));
-			return true;
-		} catch (Exception e) {
-			return false;
-		} finally {
-			HBaseUtils.closeHtable(htable);
-		}
+		return deleteData(tableName, Arrays.asList(new String[]{rowKey}));
 	}
 
 	@Override

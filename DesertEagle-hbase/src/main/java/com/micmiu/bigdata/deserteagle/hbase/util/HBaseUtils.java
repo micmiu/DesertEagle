@@ -1,11 +1,15 @@
 package com.micmiu.bigdata.deserteagle.hbase.util;
 
+import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HTableInterface;
+import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -53,5 +57,27 @@ public class HBaseUtils {
 			sb.append(entry.getKey() + " = " + entry.getValue());
 		}
 		return sb.append("]").toString();
+	}
+
+	public static Map<String, String> parseResult2Map(Result result) {
+		return parseResult2Map(result, null);
+	}
+
+	public static Map<String, String> parseResult2Map(Result result, String rowkeyName) {
+		if (null == result || result.isEmpty()) {
+			return null;
+		}
+		Map<String, String> kvMap = new LinkedHashMap<String, String>();
+		if (null != rowkeyName && !"".equals(rowkeyName)) {
+			kvMap.put(rowkeyName, Bytes.toString(result.getRow()));
+		}
+		for (Cell cell : result.rawCells()) {
+			String value = Bytes.toString(CellUtil.cloneValue(cell));
+			if ("\"\"".equals(value)) {
+				value = null;
+			}
+			kvMap.put(Bytes.toString(CellUtil.cloneQualifier(cell)), value);
+		}
+		return kvMap;
 	}
 }
