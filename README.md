@@ -1,13 +1,19 @@
 # DesertEagle #
 
 ## info ##
-DesertEagle（沙漠之鹰）
+DesertEagle（沙漠之鹰）,一个灵活小巧的工具
 
-## feature ##
- + hbase 客户端工具类
- + elasticsearch 客户端工具类
- + hbase 查询工具类
- + elasticsearch 查询工具类
+## Module :##
+
+* DesertEagle-parent  	: 父模块，配置依赖关系
+* DesertEagle-core  	: 主要核心模块
+* DesertEagle-es	  	: elasticsearch查询功能模块
+* DesertEagle-hbase   	: hbase操作功能模块
+
+## feature :##
+* ES分页查询
+* ES多条件组合查询
+* HBASE常用基本操作
 
 
 
