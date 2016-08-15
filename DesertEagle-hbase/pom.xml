@@ -5,8 +5,8 @@
     <parent>
         <groupId>com.micmiu.bigdata</groupId>
         <artifactId>deserteagle-parent</artifactId>
-        <version>1.1-SNAPSHOT</version>
-        <relativePath>../DesertEagle-parent/pom.xml</relativePath>
+        <version>1.1</version>
+        <relativePath>../DesertEagle-parent</relativePath>
     </parent>
 
     <artifactId>deserteagle-hbase</artifactId>
