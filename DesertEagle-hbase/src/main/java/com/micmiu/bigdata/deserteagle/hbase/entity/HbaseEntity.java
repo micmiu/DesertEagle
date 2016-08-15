@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class HbaseEntity {
 
-	public static final String ROWKEY = "@ROWKEY@";
+	public static final String DEF_ROWKEY = "@ROWKEY@";
 
 	private String tableName;
 

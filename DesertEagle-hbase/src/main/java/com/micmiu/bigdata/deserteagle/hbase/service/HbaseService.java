@@ -16,6 +16,8 @@ public interface HbaseService {
 
 	int MAX_SIZE = 100;
 
+	String getRowkeyName();
+
 	Boolean checkTable(String tableName);
 
 	HTableInterface getTable(String tableName);

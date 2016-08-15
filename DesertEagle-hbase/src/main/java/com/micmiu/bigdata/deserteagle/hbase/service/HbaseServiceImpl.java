@@ -35,6 +35,13 @@ public class HbaseServiceImpl implements HbaseService {
 
 	private HbaseConnectionManager hbaseConnectionManager;
 
+	private String rowkeyName = HbaseEntity.DEF_ROWKEY;
+
+	@Override
+	public String getRowkeyName() {
+		return rowkeyName;
+	}
+
 	public Boolean checkTable(String tableName) {
 		if (null == tableName || "".equals(tableName)) {
 			return false;
@@ -69,7 +76,7 @@ public class HbaseServiceImpl implements HbaseService {
 			Result[] results = htable.get(getList);
 			for (Result result : results) {
 				Map<String, String> kvMap = new LinkedHashMap<String, String>();
-				kvMap.put(HbaseEntity.ROWKEY, new String(result.getRow()));
+				kvMap.put(getRowkeyName(), new String(result.getRow()));
 				for (Cell cell : result.rawCells()) {
 					kvMap.put(new String(CellUtil.cloneFamily(cell)) + ":" + new String(CellUtil.cloneQualifier(cell)), new String(CellUtil.cloneValue(cell)));
 				}
@@ -94,7 +101,7 @@ public class HbaseServiceImpl implements HbaseService {
 			scan.setMaxResultSize(limit);
 			ResultScanner rs = table.getScanner(scan);
 			for (Result result : rs) {
-				Map<String, String> kvmap = HBaseUtils.parseResult2Map(result, HbaseEntity.ROWKEY);
+				Map<String, String> kvmap = HBaseUtils.parseResult2Map(result, getRowkeyName());
 				if (null != kvmap && !kvmap.isEmpty()) {
 					dataResult.add(kvmap);
 				}
@@ -113,7 +120,7 @@ public class HbaseServiceImpl implements HbaseService {
 			Get get = new Get(rowkey.getBytes());
 			get.addFamily(HBaseUtils.getBytes(familyName));
 			Result result = table.get(get);
-			return HBaseUtils.parseResult2Map(result, HbaseEntity.ROWKEY);
+			return HBaseUtils.parseResult2Map(result, getRowkeyName());
 		} catch (Exception e) {
 			LOGGER.error("getData error:", e);
 			return null;
@@ -155,7 +162,7 @@ public class HbaseServiceImpl implements HbaseService {
 
 	@Override
 	public boolean putData(String tableName, String familyName, Map<String, String> dataMap) {
-		return putData(tableName, dataMap.get(HbaseEntity.ROWKEY), familyName, dataMap);
+		return putData(tableName, dataMap.get(getRowkeyName()), familyName, dataMap);
 	}
 
 
@@ -166,14 +173,14 @@ public class HbaseServiceImpl implements HbaseService {
 			htable = getTable(tableName);
 			List<Put> puts = new ArrayList<Put>();
 			for (Map<String, String> dataMap : dataList) {
-				String rowKey = dataMap.get(HbaseEntity.ROWKEY);
+				String rowKey = dataMap.get(getRowkeyName());
 				if (null == rowKey) {
 					LOGGER.warn("tableName={} put data={} with rowkey is null.", tableName, HBaseUtils.map2String(dataMap));
 					continue;
 				}
 				Put put = new Put(Bytes.toBytes(rowKey));
 				for (Map.Entry<String, String> entry : dataMap.entrySet()) {
-					if (HbaseEntity.ROWKEY.equals(entry.getKey())) {
+					if (getRowkeyName().equals(entry.getKey())) {
 						continue;
 					}
 					if (null == entry.getValue()) {
@@ -220,6 +227,10 @@ public class HbaseServiceImpl implements HbaseService {
 			HBaseUtils.closeHtable(htable);
 		}
 
+	}
+
+	public void setRowkeyName(String rowkeyName) {
+		this.rowkeyName = rowkeyName;
 	}
 
 	public void setHbaseConnectionManager(HbaseConnectionManager hbaseConnectionManager) {
