@@ -76,9 +76,9 @@ public class HbaseServiceImpl implements HbaseService {
 			Result[] results = htable.get(getList);
 			for (Result result : results) {
 				Map<String, String> kvMap = new LinkedHashMap<String, String>();
-				kvMap.put(getRowkeyName(), new String(result.getRow()));
+				kvMap.put(getRowkeyName(), Bytes.toString(result.getRow()));
 				for (Cell cell : result.rawCells()) {
-					kvMap.put(new String(CellUtil.cloneFamily(cell)) + ":" + new String(CellUtil.cloneQualifier(cell)), new String(CellUtil.cloneValue(cell)));
+					kvMap.put(Bytes.toString(CellUtil.cloneFamily(cell)) + ":" + Bytes.toString(CellUtil.cloneQualifier(cell)), Bytes.toString(CellUtil.cloneValue(cell)));
 				}
 				dataResult.add(kvMap);
 			}
