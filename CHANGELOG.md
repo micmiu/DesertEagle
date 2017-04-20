@@ -7,7 +7,7 @@
 #### Improvement :
       * 
 #### Bug :
-	  * 
+	  * fix queryDataByRowkeyList 乱码问题
 
 ---
 ## v1.1
