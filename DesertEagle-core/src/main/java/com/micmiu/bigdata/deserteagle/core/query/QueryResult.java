@@ -4,7 +4,7 @@ package com.micmiu.bigdata.deserteagle.core.query;
 import java.util.List;
 
 /**
- * Created
+ * query result bean
  * User: <a href="http://micmiu.com">micmiu</a>
  * Date: 03/31/2016
  */

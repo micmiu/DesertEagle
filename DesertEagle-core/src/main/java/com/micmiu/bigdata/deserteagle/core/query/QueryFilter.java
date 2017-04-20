@@ -1,7 +1,7 @@
 package com.micmiu.bigdata.deserteagle.core.query;
 
 /**
- * Created
+ * query filter
  * User: <a href="http://micmiu.com">micmiu</a>
  * Date: 03/31/2016
  */
