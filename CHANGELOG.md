@@ -1,9 +1,17 @@
 # changelog list
+---
+## v1.3
+#### New Feature :
+      * ?
+#### Improvement :
+      * ?
+#### Bug :
+	  * ?
 
 ---
 ## v1.2
 #### New Feature :
-      * ?
+      * 
 #### Improvement :
       * 
 #### Bug :
