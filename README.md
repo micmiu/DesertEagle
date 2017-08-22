@@ -2,6 +2,8 @@
 
 ## info ##
 DesertEagle（沙漠之鹰）,一个灵活小巧的HBase 操作的工具
+hbase         support v0.98.9
+elasticsearch support v2.3.x
 
 ## Module ##
 
