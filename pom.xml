@@ -44,6 +44,14 @@
         <module>DesertEagle-hbase</module>
     </modules>
 
+    <repositories>
+        <repository>
+            <id>es-repo</id>
+            <name>es-repo</name>
+            <url>http://maven.elasticsearch.org/public-releases</url>
+        </repository>
+    </repositories>
+
     <licenses>
         <license>
             <name>Apache 2.0 License</name>

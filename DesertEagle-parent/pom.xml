@@ -36,7 +36,7 @@
         <commons-logging.version>1.1.1</commons-logging.version>
         <commons-logging-api.version>1.0.4</commons-logging-api.version>
         <commons-math.version>2.1</commons-math.version>
-        <guava.version>11.0.2</guava.version>
+        <guava.version>18.0</guava.version>
 
         <hadoop.version>2.5.2</hadoop.version>
         <hbase.version>0.98.9-hadoop2</hbase.version>
@@ -50,8 +50,9 @@
         <fastjson.version>1.2.4</fastjson.version>
         <jackson.version>1.9.8</jackson.version>
 
-        <elasticsearch.version>1.7.0</elasticsearch.version>
+        <elasticsearch.version>2.3.5</elasticsearch.version>
         <elasticsearch-analysis-icu.version>2.7.0</elasticsearch-analysis-icu.version>
+        <joda-time.verion>2.9.4</joda-time.verion>
 
         <spring.version>3.2.0.RELEASE</spring.version>
 
@@ -89,14 +90,19 @@
         <dependencies>
             <dependency>
                 <groupId>org.elasticsearch</groupId>
-                <artifactId>elasticsearch</artifactId>
+                <artifactId>parent</artifactId>
                 <version>${elasticsearch.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.elasticsearch</groupId>
-                <artifactId>elasticsearch-analysis-icu</artifactId>
-                <version>${elasticsearch-analysis-icu.version}</version>
+                <artifactId>elasticsearch</artifactId>
+                <version>${elasticsearch.version}</version>
             </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.elasticsearch</groupId>-->
+                <!--<artifactId>elasticsearch-analysis-icu</artifactId>-->
+                <!--<version>${elasticsearch-analysis-icu.version}</version>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>org.apache.hbase</groupId>
                 <artifactId>hbase-client</artifactId>
